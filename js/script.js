@@ -1,11 +1,7 @@
-// responsive nav for smartphone
-// with jquery
-// $('.icon').on('click', function(e){
-//   $('a:not(.icon)').toggleClass('responsive');
-//   e.preventDefault();
-// });
+// denied undeclared variables
+"use strict";
 
-// without jquery
+// responsive nav for smartphone
 document.querySelector('.icon').addEventListener('click', function(e){
   document.querySelectorAll('.navbar a:not(.icon)').forEach(function(el){
     el.classList.toggle('responsive');
@@ -13,13 +9,6 @@ document.querySelector('.icon').addEventListener('click', function(e){
   e.preventDefault();
 });
 
-// with jquery
-// $('.navbar > a:not(.icon)').on('click', function(e){
-//   $('.navbar > a:not(.icon)').removeClass('responsive');
-//   e.preventDefault();
-// });
-
-// without jquery
 document.querySelectorAll('.navbar > a:not(.icon)').forEach(function(el){
   el.onclick = function(ev){
     document.querySelectorAll('.navbar > a:not(.icon)').forEach(function(el){
@@ -28,17 +17,8 @@ document.querySelectorAll('.navbar > a:not(.icon)').forEach(function(el){
     ev.preventDefault();
   }
 });
-// ------------------------------
 
 // bullet click pagination function
-// with jquery
-// $('.pagination').on('click', function(e){
-//   $('.pagination').removeClass('active');
-//   $(e.target).addClass('active');
-//   sliding();
-// });
-
-// without jquery
 document.querySelectorAll('.pagination').forEach(function(el){
   el.addEventListener('click', function(e){
     document.querySelectorAll('.pagination').forEach(function(el){
@@ -48,20 +28,9 @@ document.querySelectorAll('.pagination').forEach(function(el){
     sliding();
   });
 });
-// ------------------------------
 
 // auto sliding function
 function pagination(){
-  // with jquery
-  // if ($('.active').index() >= $('.pagination').length - 1) {
-  //   $('.pagination').removeClass('active');
-  //   $('.pagination').first().addClass('active');
-  // } else {
-  //   $('.active').next('.pagination').addClass('active');
-  //   $('.active').first().removeClass('active');
-  // }
-
-  // without jquery
   const nodes = Array.prototype.slice.call(document.querySelector('.slider-pagination').children);
   const node = document.querySelector('.active');
   const nodeIndex = nodes.indexOf(node);
@@ -79,77 +48,47 @@ function pagination(){
 
   sliding();
 }
-// --------------------------------
+
+// remove class from element function
+function removeClass(elName, cName){
+  document.querySelectorAll(elName).forEach(function (el) {
+    el.classList.remove(cName);
+  });
+}
+
+// page index function
+const z = document.querySelectorAll('.slider');
+function pageIndex(num){
+  z[num].querySelector('.content-desc h3').classList.add('landing');
+  z[num].querySelector('.content-desc p').classList.add('landing');
+  z[num].querySelector('.content-desc img').classList.add('landing');
+}
 
 // sliding function
 function sliding(){
-  // with jquery
-  // $('.content-desc h3').removeClass('landing');
-  // $('.content-desc p').removeClass('landing');
-  // $('.content-desc img').removeClass('landing');
-  //
-  // if ($('.active').hasClass('page2')){
-  //   $('.wrap').animate({left:'-100%'}, 2000);
-  //   $('.slide2 .content-desc h3').addClass('landing');
-  //   $('.slide2 .content-desc p').addClass('landing');
-  //   $('.slide2 .content-desc img').addClass('landing');
-  // } else if ($('.active').hasClass('page3')) {
-  //   $('.wrap').animate({left:'-200%'}, 2000);
-  //   $('.slide3 .content-desc h3').addClass('landing');
-  //   $('.slide3 .content-desc p').addClass('landing');
-  //   $('.slide3 .content-desc img').addClass('landing');
-  // } else if ($('.active').hasClass('page4')) {
-  //   $('.wrap').animate({left:'-300%'}, 2000);
-  //   $('.slide4 .content-desc h3').addClass('landing');
-  //   $('.slide4 .content-desc p').addClass('landing');
-  //   $('.slide4 .content-desc img').addClass('landing');
-  // } else {
-  //   $('.wrap').animate({left:'0%'}, 2000);
-  //   $('.slide1 .content-desc h3').addClass('landing');
-  //   $('.slide1 .content-desc p').addClass('landing');
-  //   $('.slide1 .content-desc img').addClass('landing');
-  // }
-
-  // without jquery
-  document.querySelectorAll('.content-desc h3').forEach(function(el){
-    el.classList.remove('landing');
-  });
-  document.querySelectorAll('.content-desc p').forEach(function(el){
-    el.classList.remove('landing');
-  });
-  document.querySelectorAll('.content-desc img').forEach(function(el){
-    el.classList.remove('landing');
-  });
+  removeClass('.content-desc h3', 'landing');
+  removeClass('.content-desc p', 'landing');
+  removeClass('.content-desc img', 'landing');
 
   const x = document.querySelector('.active');
   const y = document.querySelector('.wrap');
-  const z = document.querySelectorAll('.slider');
+
   if(x.classList.contains('page2')){
     y.style.left = '-100%';
-    z[1].querySelector('.content-desc h3').classList.add('landing');
-    z[1].querySelector('.content-desc p').classList.add('landing');
-    z[1].querySelector('.content-desc img').classList.add('landing');
+    pageIndex(1);
   } else if(x.classList.contains('page3')){
     y.style.left = '-200%';
-    z[2].querySelector('.content-desc h3').classList.add('landing');
-    z[2].querySelector('.content-desc p').classList.add('landing');
-    z[2].querySelector('.content-desc img').classList.add('landing');
+    pageIndex(2);
   } else if(x.classList.contains('page4')){
     y.style.left = '-300%';
-    z[3].querySelector('.content-desc h3').classList.add('landing');
-    z[3].querySelector('.content-desc p').classList.add('landing');
-    z[3].querySelector('.content-desc img').classList.add('landing');
+    pageIndex(3);
   } else {
     y.style.left = '0%';
-    z[0].querySelector('.content-desc h3').classList.add('landing');
-    z[0].querySelector('.content-desc p').classList.add('landing');
-    z[0].querySelector('.content-desc img').classList.add('landing');
+    pageIndex(0);
   }
 }
-// ------------------------------
 
-// call sliding function on web finished load
-// sliding();
+// call sliding function after 1 second
 setTimeout(sliding, 1000);
 
 // call pagination function every 6 second
